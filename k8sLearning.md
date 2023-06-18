@@ -5,6 +5,26 @@ To start minikube:
 minikube start
 ```
 
+To stop minikubes:
+
+```bash
+minikube stop
+```
+
+To delete minikubes:
+
+```bash
+minikube delete
+```
+
+minikube status
+
+To get logs:
+
+```bash
+kubectl logs <pod-name>
+```
+
 Creating an ubuntu pod:
 1st create yaml file name `ubuntu-pod.yaml`
 Contents:
@@ -26,8 +46,11 @@ spec:
 Run command to start the pod:
 
 ```bash
+kubectl apply -f ubuntu-service.yaml
 kubectl apply -f ubuntu-pod.yaml
 ```
+<!-- kubectl apply -f ubuntu-pod.yaml --port=8000 -->
+
 
 To check pod is running:
 
@@ -35,9 +58,15 @@ To check pod is running:
 kubectl get pods
 ```
 
+```bash
+kubectl port-forward ubuntu-pod 4200:4200
+```
+
+http://localhost:8000/send-hi
+
 To access the pod:
 
-```
+```bash
 kubectl exec -it ubuntu-pod -- /bin/bash
 ```
 
@@ -50,7 +79,7 @@ sudo apt install software-properties-common
 and install python dependencies from source:
 
 ```bash
-sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
 ```
 
 install python 3.9 source code using `wget`:
@@ -65,4 +94,25 @@ install node:
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_lts.x
 sudo apt install -y nodejs
+```
+
+
+```bash
+apt install python3-pip
+apt install python3.10-venv
+python3 -m venv myenv
+```
+
+
+TO DELETE MINIKUBE:
+```bash
+minikube stop; minikube delete &&
+docker stop $(docker ps -aq) &&
+rm -rf ~/.kube ~/.minikube &&
+sudo rm -rf /usr/local/bin/localkube /usr/local/bin/minikube &&
+launchctl stop '*kubelet*.mount' &&
+launchctl stop localkube.service &&
+launchctl disable localkube.service &&
+sudo rm -rf /etc/kubernetes/ &&
+docker system prune -af --volumes
 ```

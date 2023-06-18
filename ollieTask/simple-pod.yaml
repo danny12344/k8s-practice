@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webhostthird
+spec:
+  containers:
+  - name: webhostthird
+    image: webhostthird
+    ports:
+    - containerPort: 8080
+
